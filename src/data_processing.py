@@ -37,3 +37,10 @@ def rfm_segmentation(df: pd.DataFrame) -> pd.DataFrame:
     rfm['cluster'] = km.fit_predict(rfm_scaled)
     rfm['is_high_risk'] = (rfm['cluster'] == rfm.groupby('cluster')['monetary'].mean().idxmin()).astype(int)
     return rfm[['is_high_risk']]
+
+def create_processed_dataset(df: pd.DataFrame) -> pd.DataFrame:
+    features = preprocess_transactions(df)
+    target = rfm_segmentation(df)
+    merged = features.merge(target, on='CustomerId', how='left')
+    merged.fillna(0, inplace=True)
+    return merged
