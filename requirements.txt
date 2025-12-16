@@ -34,3 +34,7 @@ flake8>=6.1.0
 
 # Environment variables (optional)
 python-dotenv>=1.1.1
+scikit-learn
+pandas
+numpy
+
